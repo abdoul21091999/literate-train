@@ -42,7 +42,8 @@ export async function POST(req: NextRequest) {
       commandName: `Réservation SenTrajet (${booking.seats} place(s))`,
       customField: { booking_id: booking.id },
     });
-  } catch {
+  } catch (err) {
+    console.error("/api/paytech/initiate: PayTech request failed:", err);
     return corsJson({ error: "paytech_unavailable" }, { status: 502 });
   }
 

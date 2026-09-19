@@ -59,10 +59,16 @@ export async function requestPaytechPayment(
     }),
   });
 
-  const data = (await res.json()) as RequestPaymentResponse & { success: number };
+  const data = (await res.json()) as RequestPaymentResponse & {
+    success: number;
+    message?: string;
+    error?: string[];
+  };
 
   if (!res.ok || data.success !== 1) {
-    throw new Error("PayTech refused the payment request.");
+    const reason = data.message ?? data.error?.join(", ") ?? `HTTP ${res.status}`;
+    console.error("PayTech request-payment failed:", reason);
+    throw new Error(`PayTech refused the payment request: ${reason}`);
   }
 
   return data;

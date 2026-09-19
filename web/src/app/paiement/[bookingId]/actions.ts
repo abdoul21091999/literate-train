@@ -38,7 +38,8 @@ export async function startPayment(bookingId: string) {
       commandName: `Réservation SenTrajet (${booking.seats} place(s))`,
       customField: { booking_id: booking.id },
     });
-  } catch {
+  } catch (err) {
+    console.error("startPayment: PayTech request failed:", err);
     redirect(`/paiement/${bookingId}?erreur=paytech`);
   }
 
