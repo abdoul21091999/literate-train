@@ -72,6 +72,12 @@ insert into public.regions (id, name) values
   (13, 'Tambacounda'), (14, 'Ziguinchor')
 on conflict (id) do nothing;
 
+alter table public.regions enable row level security;
+
+create policy "Regions are viewable by everyone"
+  on public.regions for select
+  using (true);
+
 -- ─────────────────────────────────────────────────────────────
 -- Trajets (rides published by drivers)
 -- ─────────────────────────────────────────────────────────────
