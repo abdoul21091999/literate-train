@@ -45,6 +45,7 @@ export const SENEGAL_REGIONS = [
   "Dakar",
   "Thiès",
   "Diourbel",
+  "Touba",
   "Fatick",
   "Kaolack",
   "Kaffrine",
