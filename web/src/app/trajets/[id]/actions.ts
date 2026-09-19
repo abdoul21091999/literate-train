@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { computeBookingTotal } from "@/lib/pricing";
 
 export async function createBooking(trajetId: string, formData: FormData) {
   const supabase = await createClient();
@@ -26,13 +27,15 @@ export async function createBooking(trajetId: string, formData: FormData) {
     redirect(`/trajets/${trajetId}?erreur=places`);
   }
 
+  const { total } = computeBookingTotal(trajet.price_per_seat, seats);
+
   const { data: booking, error: bookingError } = await supabase
     .from("bookings")
     .insert({
       trajet_id: trajetId,
       passenger_id: user.id,
       seats,
-      amount_total: seats * trajet.price_per_seat,
+      amount_total: total,
     })
     .select("id")
     .single();

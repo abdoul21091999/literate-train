@@ -14,6 +14,7 @@ import { supabase } from "../lib/supabase";
 import { createBooking } from "../lib/api";
 import { useAuth } from "../lib/AuthProvider";
 import { colors } from "../theme";
+import { computeBookingTotal } from "../lib/pricing";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TripDetail">;
 
@@ -141,12 +142,28 @@ export default function TripDetailScreen({ route, navigation }: Props) {
             </Pressable>
           </View>
 
-          <View style={styles.totalRow}>
-            <Text style={styles.muted}>Total à payer</Text>
-            <Text style={styles.price}>
-              {(seats * trajet.price_per_seat).toLocaleString("fr-FR")} FCFA
-            </Text>
-          </View>
+          {(() => {
+            const { rideTotal, serviceFee, total } = computeBookingTotal(
+              trajet.price_per_seat,
+              seats
+            );
+            return (
+              <View style={styles.totalCard}>
+                <View style={styles.totalLine}>
+                  <Text style={styles.muted}>Prix du trajet</Text>
+                  <Text style={styles.muted}>{rideTotal.toLocaleString("fr-FR")} FCFA</Text>
+                </View>
+                <View style={styles.totalLine}>
+                  <Text style={styles.muted}>Frais de service</Text>
+                  <Text style={styles.muted}>{serviceFee.toLocaleString("fr-FR")} FCFA</Text>
+                </View>
+                <View style={[styles.totalLine, styles.totalLineFinal]}>
+                  <Text style={styles.bold}>Total à payer</Text>
+                  <Text style={styles.price}>{total.toLocaleString("fr-FR")} FCFA</Text>
+                </View>
+              </View>
+            );
+          })()}
 
           <Pressable style={styles.button} onPress={handleBook} disabled={booking}>
             {booking ? (
@@ -189,7 +206,9 @@ const styles = StyleSheet.create({
   seatBtn: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.surface2, alignItems: "center", justifyContent: "center" },
   seatBtnText: { color: colors.foreground, fontSize: 20, fontWeight: "800" },
   seatCount: { color: colors.foreground, fontSize: 18, fontWeight: "800", minWidth: 24, textAlign: "center" },
-  totalRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: colors.surface2, borderRadius: 10, padding: 12, marginBottom: 14 },
+  totalCard: { backgroundColor: colors.surface2, borderRadius: 10, padding: 12, marginBottom: 14, gap: 6 },
+  totalLine: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  totalLineFinal: { borderTopWidth: 1, borderTopColor: colors.border, paddingTop: 6, marginTop: 2 },
   button: { backgroundColor: colors.brand, borderRadius: 10, paddingVertical: 14, alignItems: "center" },
   buttonText: { color: colors.brandForeground, fontWeight: "800" },
 });

@@ -22,7 +22,7 @@ const SECTIONS: { title: string; icon: LucideIcon; body: string }[] = [
   {
     title: "Modèle économique",
     icon: Wallet,
-    body: "Commission de 8 à 12 % prélevée sur chaque réservation payée en ligne. Options futures : mise en avant de trajets, abonnement conducteurs professionnels, partenariats avec les gares routières.",
+    body: "Frais de service fixe de 300 FCFA prélevés sur chaque réservation payée en ligne, quel que soit le prix du trajet — simple, transparent, sans pourcentage variable qui pénalise les longs trajets. Options futures : abonnement conducteurs professionnels, mise en avant de trajets, partenariats avec les gares routières.",
   },
   {
     title: "Marché",

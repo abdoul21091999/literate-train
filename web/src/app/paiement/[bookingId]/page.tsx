@@ -3,6 +3,10 @@ import { CreditCard, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { startPayment } from "./actions";
 
+function formatFcfa(amount: number) {
+  return `${amount.toLocaleString("fr-FR")} FCFA`;
+}
+
 const ERRORS: Record<string, string> = {
   introuvable: "Cette réservation est introuvable ou déjà payée.",
   paytech: "Le service de paiement est momentanément indisponible. Réessayez.",
@@ -29,7 +33,7 @@ export default async function PaiementPage({
 
   const { data: booking } = await supabase
     .from("bookings")
-    .select("*, trajet:trajets(from_city, to_city, departure_at)")
+    .select("*, trajet:trajets(from_city, to_city, departure_at, price_per_seat)")
     .eq("id", bookingId)
     .eq("passenger_id", user.id)
     .single();
@@ -39,6 +43,9 @@ export default async function PaiementPage({
   if (booking.status === "confirmed") {
     redirect(`/paiement/succes?ref=${bookingId}`);
   }
+
+  const rideTotal = booking.seats * booking.trajet.price_per_seat;
+  const serviceFee = booking.amount_total - rideTotal;
 
   const boundAction = startPayment.bind(null, bookingId);
 
@@ -72,10 +79,18 @@ export default async function PaiementPage({
           <span className="text-muted">Places</span>
           <span className="font-semibold">{booking.seats}</span>
         </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted">Prix du trajet</span>
+          <span className="font-semibold">{formatFcfa(rideTotal)}</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted">Frais de service</span>
+          <span className="font-semibold">{formatFcfa(serviceFee)}</span>
+        </div>
         <div className="flex justify-between border-t border-border pt-3 text-base">
           <span className="font-semibold">Total</span>
           <span className="font-extrabold text-brand">
-            {booking.amount_total.toLocaleString("fr-FR")} FCFA
+            {formatFcfa(booking.amount_total)}
           </span>
         </div>
       </div>

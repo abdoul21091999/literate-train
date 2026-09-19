@@ -55,7 +55,9 @@ export default function SearchScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.hero}>
-        <Text style={styles.heroTitle}>Voyagez malin à travers le Sénégal 🇸🇳</Text>
+        <Text style={styles.heroTitle}>
+          La manière la plus simple de traverser le Sénégal 🇸🇳
+        </Text>
       </View>
 
       <View style={styles.searchBox}>

@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { corsJson, corsPreflight } from "@/lib/cors";
+import { computeBookingTotal } from "@/lib/pricing";
 
 // JSON API used by the SenTrajet mobile app to create a booking.
 // The web app's /trajets/[id] page uses the createBooking server action
@@ -32,13 +33,15 @@ export async function POST(req: NextRequest) {
     return corsJson({ error: "not_enough_seats" }, { status: 409 });
   }
 
+  const { total } = computeBookingTotal(trajet.price_per_seat, seats);
+
   const { data: booking, error } = await supabase
     .from("bookings")
     .insert({
       trajet_id: trajetId,
       passenger_id: user.id,
       seats,
-      amount_total: seats * trajet.price_per_seat,
+      amount_total: total,
     })
     .select("id")
     .single();

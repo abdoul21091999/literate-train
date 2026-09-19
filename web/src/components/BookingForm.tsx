@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Users, CreditCard } from "lucide-react";
 import { createBooking } from "@/app/trajets/[id]/actions";
+import { computeBookingTotal } from "@/lib/pricing";
 
 export default function BookingForm({
   trajetId,
@@ -15,6 +16,7 @@ export default function BookingForm({
 }) {
   const [seats, setSeats] = useState(1);
   const boundAction = createBooking.bind(null, trajetId);
+  const { rideTotal, serviceFee, total } = computeBookingTotal(pricePerSeat, seats);
 
   return (
     <form action={boundAction} className="space-y-4">
@@ -43,11 +45,21 @@ export default function BookingForm({
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-lg bg-surface-2 px-4 py-3">
-        <span className="text-sm text-muted">Total à payer</span>
-        <span className="text-xl font-extrabold text-brand">
-          {(seats * pricePerSeat).toLocaleString("fr-FR")} FCFA
-        </span>
+      <div className="space-y-1.5 rounded-lg bg-surface-2 px-4 py-3">
+        <div className="flex items-center justify-between text-sm text-muted">
+          <span>Prix du trajet</span>
+          <span>{rideTotal.toLocaleString("fr-FR")} FCFA</span>
+        </div>
+        <div className="flex items-center justify-between text-sm text-muted">
+          <span>Frais de service</span>
+          <span>{serviceFee.toLocaleString("fr-FR")} FCFA</span>
+        </div>
+        <div className="flex items-center justify-between border-t border-border pt-1.5">
+          <span className="text-sm font-medium">Total à payer</span>
+          <span className="text-xl font-extrabold text-brand">
+            {total.toLocaleString("fr-FR")} FCFA
+          </span>
+        </div>
       </div>
 
       <button

@@ -31,7 +31,7 @@ export default async function HomePage() {
         />
         <div className="relative">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
-            Voyagez malin à travers le{" "}
+            La manière la plus simple de traverser le{" "}
             <span className="bg-gradient-to-r from-brand-light to-brand bg-clip-text text-transparent">
               Sénégal
             </span>{" "}
