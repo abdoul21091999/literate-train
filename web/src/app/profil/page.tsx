@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { BadgeCheck, Star, Ticket, Route, Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile } from "@/lib/auth";
+import AvatarUploader from "@/components/AvatarUploader";
 
 const STATUS_LABEL: Record<string, string> = {
   pending_payment: "En attente de paiement",
@@ -44,9 +45,11 @@ export default async function ProfilPage() {
   return (
     <div className="space-y-8">
       <div className="card-elevated flex items-center gap-4 rounded-2xl border border-border bg-surface p-5">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-surface-2 to-border text-2xl font-bold text-foreground">
-          {profile.full_name[0]?.toUpperCase()}
-        </div>
+        <AvatarUploader
+          userId={profile.id}
+          fullName={profile.full_name}
+          avatarUrl={profile.avatar_url}
+        />
         <div>
           <div className="flex items-center gap-2 text-xl font-bold">
             {profile.full_name}

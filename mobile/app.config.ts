@@ -24,7 +24,16 @@ const config: ExpoConfig = {
   web: {
     favicon: "./assets/favicon.png",
   },
-  plugins: ["expo-web-browser", "@react-native-community/datetimepicker"],
+  plugins: [
+    "expo-web-browser",
+    "@react-native-community/datetimepicker",
+    [
+      "expo-image-picker",
+      {
+        photosPermission: "SenTrajet a besoin d'accéder à vos photos pour changer votre photo de profil.",
+      },
+    ],
+  ],
   extra: {
     supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
     supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,

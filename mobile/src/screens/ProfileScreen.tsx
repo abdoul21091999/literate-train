@@ -5,6 +5,7 @@ import type { Booking, Trajet, TabScreenProps } from "../types";
 import { useAuth } from "../lib/AuthProvider";
 import { supabase } from "../lib/supabase";
 import { colors } from "../theme";
+import AvatarUploader from "../components/AvatarUploader";
 
 type Props = TabScreenProps<"Profile">;
 
@@ -71,9 +72,7 @@ export default function ProfileScreen({ navigation }: Props) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ padding: 16 }}>
       <View style={styles.headerCard}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{profile.full_name[0]?.toUpperCase()}</Text>
-        </View>
+        <AvatarUploader size={56} />
         <View>
           <Text style={styles.name}>
             {profile.full_name}
@@ -160,8 +159,6 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
   },
-  avatar: { width: 56, height: 56, borderRadius: 28, backgroundColor: colors.surface2, alignItems: "center", justifyContent: "center" },
-  avatarText: { color: colors.foreground, fontWeight: "800", fontSize: 22 },
   name: { color: colors.foreground, fontWeight: "800", fontSize: 17 },
   muted: { color: colors.muted, fontSize: 13, marginTop: 2 },
   logout: { alignSelf: "flex-start", marginBottom: 20 },

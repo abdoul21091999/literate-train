@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BadgeCheck, Star, ArrowRight, Clock, Users } from "lucide-react";
 import type { Trajet } from "@/lib/types";
+import Avatar from "@/components/Avatar";
 
 function formatDate(iso: string) {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -22,9 +23,7 @@ export default function TripCard({ trajet }: { trajet: Trajet }) {
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-surface-2 to-border font-bold text-foreground">
-            {driver?.full_name?.[0]?.toUpperCase() ?? "?"}
-          </div>
+          <Avatar avatarUrl={driver?.avatar_url} fullName={driver?.full_name} size={44} />
           <div>
             <div className="flex items-center gap-1.5 font-semibold">
               {driver?.full_name ?? "Conducteur"}

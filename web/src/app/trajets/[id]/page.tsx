@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, BadgeCheck, Banknote, Users, Car, Star, CalendarClock } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import BookingForm from "@/components/BookingForm";
+import Avatar from "@/components/Avatar";
 import type { Trajet } from "@/lib/types";
 
 function formatDate(iso: string) {
@@ -85,9 +86,7 @@ export default async function TrajetDetailPage({
         <div className="card-elevated rounded-2xl border border-border bg-surface p-5">
           <h2 className="mb-3 font-bold">Conducteur</h2>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-surface-2 to-border text-lg font-bold text-foreground">
-              {driver?.full_name?.[0]?.toUpperCase() ?? "?"}
-            </div>
+            <Avatar avatarUrl={driver?.avatar_url} fullName={driver?.full_name} size={48} />
             <div>
               <div className="flex items-center gap-1.5 font-semibold">
                 {driver?.full_name ?? "Conducteur"}

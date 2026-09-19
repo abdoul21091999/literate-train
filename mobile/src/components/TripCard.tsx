@@ -1,6 +1,7 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import type { Trajet } from "../types";
 import { colors } from "../theme";
+import Avatar from "./Avatar";
 
 function formatDate(iso: string) {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -25,11 +26,7 @@ export default function TripCard({
     <Pressable style={styles.card} onPress={onPress}>
       <View style={styles.row}>
         <View style={styles.driverRow}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {driver?.full_name?.[0]?.toUpperCase() ?? "?"}
-            </Text>
-          </View>
+          <Avatar avatarUrl={driver?.avatar_url} fullName={driver?.full_name} size={40} />
           <View>
             <Text style={styles.driverName}>
               {driver?.full_name ?? "Conducteur"}
@@ -72,15 +69,6 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   driverRow: { flexDirection: "row", alignItems: "center", gap: 10 },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.surface2,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  avatarText: { color: colors.foreground, fontWeight: "800" },
   driverName: { color: colors.foreground, fontWeight: "700" },
   meta: { color: colors.muted, fontSize: 12 },
   price: { color: colors.brand, fontWeight: "800", fontSize: 18 },

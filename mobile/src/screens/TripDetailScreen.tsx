@@ -15,6 +15,7 @@ import { createBooking } from "../lib/api";
 import { useAuth } from "../lib/AuthProvider";
 import { colors } from "../theme";
 import { computeBookingTotal } from "../lib/pricing";
+import Avatar from "../components/Avatar";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TripDetail">;
 
@@ -105,11 +106,7 @@ export default function TripDetailScreen({ route, navigation }: Props) {
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Conducteur</Text>
         <View style={styles.driverRow}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {driver?.full_name?.[0]?.toUpperCase() ?? "?"}
-            </Text>
-          </View>
+          <Avatar avatarUrl={driver?.avatar_url} fullName={driver?.full_name} size={44} />
           <View>
             <Text style={styles.bold}>
               {driver?.full_name ?? "Conducteur"}
@@ -200,8 +197,6 @@ const styles = StyleSheet.create({
   notes: { color: colors.muted, marginTop: 12, backgroundColor: colors.surface2, padding: 10, borderRadius: 10 },
   sectionTitle: { color: colors.foreground, fontWeight: "800", marginBottom: 10 },
   driverRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-  avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.surface2, alignItems: "center", justifyContent: "center" },
-  avatarText: { color: colors.foreground, fontWeight: "800", fontSize: 16 },
   seatRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 20, marginBottom: 14 },
   seatBtn: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.surface2, alignItems: "center", justifyContent: "center" },
   seatBtnText: { color: colors.foreground, fontSize: 20, fontWeight: "800" },

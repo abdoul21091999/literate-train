@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Bus, User } from "lucide-react";
+import { Bus } from "lucide-react";
 import { getCurrentProfile } from "@/lib/auth";
 import LogoutButton from "@/components/LogoutButton";
 import NavTabs from "@/components/NavTabs";
+import Avatar from "@/components/Avatar";
 
 export default async function Navbar() {
   const profile = await getCurrentProfile();
@@ -33,9 +34,9 @@ export default async function Navbar() {
             <>
               <Link
                 href="/profil"
-                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-2"
+                className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-2"
               >
-                <User size={15} strokeWidth={2.25} className="text-muted" />
+                <Avatar avatarUrl={profile.avatar_url} fullName={profile.full_name} size={26} />
                 {profile.full_name}
               </Link>
               <LogoutButton />
