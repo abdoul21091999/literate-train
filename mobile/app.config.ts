@@ -14,7 +14,7 @@ const config: ExpoConfig = {
   android: {
     package: "sn.sentrajet.app",
     adaptiveIcon: {
-      backgroundColor: "#0B1120",
+      backgroundColor: "#0A0F1E",
       foregroundImage: "./assets/android-icon-foreground.png",
       backgroundImage: "./assets/android-icon-background.png",
       monochromeImage: "./assets/android-icon-monochrome.png",
