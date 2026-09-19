@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getUserFromRequest } from "@/lib/supabase/bearer";
+import { corsJson, corsPreflight } from "@/lib/cors";
 
 // JSON API used by the SenTrajet mobile app to create a booking.
 // The web app's /trajets/[id] page uses the createBooking server action
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
   const { user, supabase } = await getUserFromRequest(req);
 
   if (!user || !supabase) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return corsJson({ error: "unauthorized" }, { status: 401 });
   }
 
   const { trajetId, seats } = (await req.json()) as {
@@ -18,7 +19,7 @@ export async function POST(req: NextRequest) {
   };
 
   if (!trajetId || !seats || seats < 1) {
-    return NextResponse.json({ error: "invalid_input" }, { status: 400 });
+    return corsJson({ error: "invalid_input" }, { status: 400 });
   }
 
   const { data: trajet } = await supabase
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (!trajet || seats > trajet.seats_available) {
-    return NextResponse.json({ error: "not_enough_seats" }, { status: 409 });
+    return corsJson({ error: "not_enough_seats" }, { status: 409 });
   }
 
   const { data: booking, error } = await supabase
@@ -43,8 +44,12 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error || !booking) {
-    return NextResponse.json({ error: "booking_failed" }, { status: 500 });
+    return corsJson({ error: "booking_failed" }, { status: 500 });
   }
 
-  return NextResponse.json({ bookingId: booking.id });
+  return corsJson({ bookingId: booking.id });
+}
+
+export async function OPTIONS() {
+  return corsPreflight();
 }

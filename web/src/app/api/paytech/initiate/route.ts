@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requestPaytechPayment } from "@/lib/paytech";
+import { corsJson, corsPreflight } from "@/lib/cors";
 
 // JSON API used by the SenTrajet mobile app to start a PayTech checkout
 // for an existing booking. Mirrors the web app's /paiement/[bookingId]
@@ -11,12 +12,12 @@ export async function POST(req: NextRequest) {
   const { user, supabase } = await getUserFromRequest(req);
 
   if (!user || !supabase) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return corsJson({ error: "unauthorized" }, { status: 401 });
   }
 
   const { bookingId } = (await req.json()) as { bookingId?: string };
   if (!bookingId) {
-    return NextResponse.json({ error: "invalid_input" }, { status: 400 });
+    return corsJson({ error: "invalid_input" }, { status: 400 });
   }
 
   const { data: booking } = await supabase
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (!booking || booking.status !== "pending_payment") {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
+    return corsJson({ error: "not_found" }, { status: 404 });
   }
 
   const refCommand = `SENTRAJET-${booking.id}-${Date.now()}`;
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest) {
       customField: { booking_id: booking.id },
     });
   } catch {
-    return NextResponse.json({ error: "paytech_unavailable" }, { status: 502 });
+    return corsJson({ error: "paytech_unavailable" }, { status: 502 });
   }
 
   const admin = createAdminClient();
@@ -55,8 +56,12 @@ export async function POST(req: NextRequest) {
     status: "pending",
   });
 
-  return NextResponse.json({
+  return corsJson({
     redirectUrl: paytech.redirect_url ?? paytech.redirectUrl,
     ref: refCommand,
   });
+}
+
+export async function OPTIONS() {
+  return corsPreflight();
 }
