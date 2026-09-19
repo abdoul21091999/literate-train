@@ -1,3 +1,4 @@
+import { SearchX } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import SearchForm from "@/components/SearchForm";
 import TripCard from "@/components/TripCard";
@@ -50,10 +51,13 @@ export default async function TrajetsPage({
             ))}
           </div>
         ) : (
-          <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted">
-            Aucun trajet ne correspond à votre recherche. Essayez d&apos;autres
-            villes ou une autre date.
-          </p>
+          <div className="rounded-xl border border-dashed border-border p-8 text-center">
+            <SearchX size={28} strokeWidth={1.75} className="mx-auto text-muted" />
+            <p className="mt-3 text-sm text-muted">
+              Aucun trajet ne correspond à votre recherche. Essayez d&apos;autres
+              villes ou une autre date.
+            </p>
+          </div>
         )}
       </div>
     </div>

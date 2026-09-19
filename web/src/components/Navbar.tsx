@@ -1,25 +1,21 @@
 import Link from "next/link";
+import { Bus, User } from "lucide-react";
 import { getCurrentProfile } from "@/lib/auth";
 import LogoutButton from "@/components/LogoutButton";
-
-const TABS = [
-  { href: "/", label: "🔍 Rechercher" },
-  { href: "/publier", label: "➕ Publier" },
-  { href: "/business-plan", label: "📋 Business Plan" },
-];
+import NavTabs from "@/components/NavTabs";
 
 export default async function Navbar() {
   const profile = await getCurrentProfile();
 
   return (
-    <header className="border-b border-border bg-surface">
+    <header className="glass sticky top-0 z-20 border-b border-border">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-lg">
-            🚌
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-light to-brand text-brand-foreground shadow-[0_4px_14px_-4px_var(--brand)]">
+            <Bus size={19} strokeWidth={2.25} />
           </span>
           <span>
-            <span className="block text-lg font-extrabold leading-none">
+            <span className="block text-lg font-extrabold leading-none tracking-tight">
               SenTrajet
             </span>
             <span className="block text-xs text-muted">
@@ -37,8 +33,9 @@ export default async function Navbar() {
             <>
               <Link
                 href="/profil"
-                className="rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-surface-2"
+                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-2"
               >
+                <User size={15} strokeWidth={2.25} className="text-muted" />
                 {profile.full_name}
               </Link>
               <LogoutButton />
@@ -47,13 +44,13 @@ export default async function Navbar() {
             <>
               <Link
                 href="/connexion"
-                className="rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-surface-2"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-2"
               >
                 Connexion
               </Link>
               <Link
                 href="/inscription"
-                className="rounded-lg bg-brand px-3 py-2 text-sm font-bold text-brand-foreground hover:opacity-90"
+                className="btn-brand rounded-lg px-3 py-2 text-sm font-bold"
               >
                 Inscription
               </Link>
@@ -62,17 +59,7 @@ export default async function Navbar() {
         </nav>
       </div>
 
-      <div className="mx-auto flex max-w-5xl gap-1 border-t border-border px-4">
-        {TABS.map((tab) => (
-          <Link
-            key={tab.href}
-            href={tab.href}
-            className="border-b-2 border-transparent px-3 py-2.5 text-sm font-semibold text-muted hover:border-brand hover:text-foreground"
-          >
-            {tab.label}
-          </Link>
-        ))}
-      </div>
+      <NavTabs />
     </header>
   );
 }

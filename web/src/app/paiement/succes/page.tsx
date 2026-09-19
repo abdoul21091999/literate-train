@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CheckCircle2, Hourglass, Ticket } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function PaiementSuccesPage({
@@ -21,7 +22,17 @@ export default async function PaiementSuccesPage({
 
   return (
     <div className="mx-auto max-w-md text-center">
-      <div className="text-5xl">{confirmed ? "✅" : "⏳"}</div>
+      <span
+        className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full ${
+          confirmed ? "bg-success/15 text-success" : "bg-brand/15 text-brand"
+        }`}
+      >
+        {confirmed ? (
+          <CheckCircle2 size={32} strokeWidth={2} />
+        ) : (
+          <Hourglass size={28} strokeWidth={2} />
+        )}
+      </span>
       <h1 className="mt-4 text-2xl font-bold">
         {confirmed ? "Paiement confirmé !" : "Paiement en cours de traitement"}
       </h1>
@@ -32,7 +43,7 @@ export default async function PaiementSuccesPage({
       </p>
 
       {payment?.booking?.trajet && (
-        <div className="mt-6 rounded-2xl border border-border bg-surface p-4 text-sm">
+        <div className="card-elevated mt-6 rounded-2xl border border-border bg-surface p-4 text-sm">
           <span className="font-semibold">
             {payment.booking.trajet.from_city} → {payment.booking.trajet.to_city}
           </span>
@@ -41,8 +52,9 @@ export default async function PaiementSuccesPage({
 
       <Link
         href="/profil"
-        className="mt-6 inline-block rounded-lg bg-brand px-4 py-2.5 font-bold text-brand-foreground hover:opacity-90"
+        className="btn-brand mt-6 inline-flex items-center gap-2 rounded-lg px-4 py-2.5 font-bold"
       >
+        <Ticket size={16} strokeWidth={2.25} />
         Voir mes réservations
       </Link>
     </div>

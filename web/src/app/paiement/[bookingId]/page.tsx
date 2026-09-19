@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { CreditCard, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { startPayment } from "./actions";
 
@@ -43,11 +44,16 @@ export default async function PaiementPage({
 
   return (
     <div className="mx-auto max-w-md">
-      <h1 className="text-2xl font-bold">💳 Paiement</h1>
-      <p className="mt-1 text-sm text-muted">
-        Vous serez redirigé vers PayTech pour payer en toute sécurité par
-        Wave ou Orange Money.
-      </p>
+      <div className="mb-6 text-center">
+        <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-light to-brand text-brand-foreground shadow-[0_6px_18px_-6px_var(--brand)]">
+          <CreditCard size={22} strokeWidth={2.25} />
+        </span>
+        <h1 className="mt-3 text-2xl font-bold">Paiement</h1>
+        <p className="mt-1 flex items-center justify-center gap-1.5 text-sm text-muted">
+          <ShieldCheck size={14} strokeWidth={2.25} className="text-success" />
+          Redirection sécurisée vers PayTech — Wave ou Orange Money
+        </p>
+      </div>
 
       {erreur && ERRORS[erreur] && (
         <p className="mt-4 rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
@@ -55,7 +61,7 @@ export default async function PaiementPage({
         </p>
       )}
 
-      <div className="mt-6 space-y-3 rounded-2xl border border-border bg-surface p-5">
+      <div className="card-elevated mt-6 space-y-3 rounded-2xl border border-border bg-surface p-5">
         <div className="flex justify-between text-sm">
           <span className="text-muted">Trajet</span>
           <span className="font-semibold">
@@ -77,8 +83,9 @@ export default async function PaiementPage({
       <form action={boundAction} className="mt-6">
         <button
           type="submit"
-          className="w-full rounded-lg bg-brand px-4 py-3 font-bold text-brand-foreground hover:opacity-90"
+          className="btn-brand flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-bold"
         >
+          <CreditCard size={16} strokeWidth={2.25} />
           Payer avec PayTech
         </button>
       </form>
