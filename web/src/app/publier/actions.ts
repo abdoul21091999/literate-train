@@ -20,7 +20,7 @@ export async function publishTrajet(formData: FormData) {
   const time = String(formData.get("time") ?? "");
   const pricePerSeat = Number(formData.get("price_per_seat") ?? 0);
   const seatsTotal = Number(formData.get("seats_total") ?? 0);
-  const vehicle = String(formData.get("vehicle") ?? "").trim() || null;
+  const vehicle = String(formData.get("vehicle") ?? "").trim();
   const notes = String(formData.get("notes") ?? "").trim() || null;
 
   if (
@@ -30,7 +30,8 @@ export async function publishTrajet(formData: FormData) {
     !date ||
     !time ||
     pricePerSeat <= 0 ||
-    seatsTotal <= 0
+    seatsTotal <= 0 ||
+    !vehicle
   ) {
     redirect("/publier?erreur=champs");
   }

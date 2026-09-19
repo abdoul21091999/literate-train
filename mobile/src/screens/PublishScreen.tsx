@@ -47,8 +47,11 @@ export default function PublishScreen({ navigation }: Props) {
   }
 
   async function handlePublish() {
-    if (!from || !to || from === to || !price || !seats) {
-      Alert.alert("Champs manquants", "Merci de remplir tous les champs (villes différentes).");
+    if (!from || !to || from === to || !price || !seats || !vehicle.trim()) {
+      Alert.alert(
+        "Champs manquants",
+        "Merci de remplir tous les champs (villes différentes, véhicule requis)."
+      );
       return;
     }
 
@@ -63,7 +66,7 @@ export default function PublishScreen({ navigation }: Props) {
         price_per_seat: Number(price),
         seats_total: Number(seats),
         seats_available: Number(seats),
-        vehicle: vehicle.trim() || null,
+        vehicle: vehicle.trim(),
         notes: notes.trim() || null,
       })
       .select("id")
@@ -145,7 +148,7 @@ export default function PublishScreen({ navigation }: Props) {
         onChangeText={setSeats}
       />
 
-      <Text style={styles.label}>Véhicule (optionnel)</Text>
+      <Text style={styles.label}>Véhicule</Text>
       <TextInput
         style={styles.input}
         placeholder="Ex: Toyota Corolla grise"

@@ -4,7 +4,7 @@ import { SENEGAL_REGIONS } from "@/lib/regions";
 import { publishTrajet } from "./actions";
 
 const ERRORS: Record<string, string> = {
-  champs: "Merci de vérifier les champs du formulaire (villes différentes, prix et places > 0).",
+  champs: "Merci de vérifier les champs du formulaire (villes différentes, prix et places > 0, véhicule requis).",
   serveur: "Une erreur est survenue, réessayez.",
 };
 
@@ -120,11 +120,10 @@ export default async function PublierPage({
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-muted">
-            Véhicule (optionnel)
-          </label>
+          <label className="mb-1 block text-sm font-medium text-muted">Véhicule</label>
           <input
             name="vehicle"
+            required
             placeholder="Ex: Toyota Corolla grise"
             className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2.5 outline-none focus:border-brand"
           />
