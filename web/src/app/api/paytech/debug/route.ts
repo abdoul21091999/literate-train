@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { requestPaytechPayment } from "@/lib/paytech";
 
+export const dynamic = "force-dynamic";
+
 // Temporary diagnostic endpoint — not linked from any UI, no user data
 // touched. Calls PayTech with dummy data and returns the raw result so we
 // can see exactly why a payment request is rejected. Remove once the
