@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SenTrajet — Covoiturage interurbain au Sénégal",
   description:
-    "Trouvez ou proposez un trajet en covoiturage entre les 14 régions du Sénégal. Réservation en ligne, paiement par Wave, Orange Money et Free Money.",
+    "Trouvez ou proposez un trajet en covoiturage entre les 14 régions du Sénégal. Réservation en ligne, paiement par Wave et Orange Money.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

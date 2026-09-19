@@ -58,8 +58,8 @@ export default function PaymentScreen({ route, navigation }: Props) {
         <>
           <Text style={styles.title}>💳 Paiement</Text>
           <Text style={styles.subtitle}>
-            Vous allez être redirigé vers PayTech pour payer par Wave, Orange
-            Money, Free Money ou carte bancaire.
+            Vous allez être redirigé vers PayTech pour payer par Wave ou
+            Orange Money.
           </Text>
           <Pressable style={styles.button} onPress={handlePay}>
             <Text style={styles.buttonText}>Payer avec PayTech</Text>

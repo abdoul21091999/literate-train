@@ -46,7 +46,7 @@ export default async function PaiementPage({
       <h1 className="text-2xl font-bold">💳 Paiement</h1>
       <p className="mt-1 text-sm text-muted">
         Vous serez redirigé vers PayTech pour payer en toute sécurité par
-        Wave, Orange Money, Free Money ou carte bancaire.
+        Wave ou Orange Money.
       </p>
 
       {erreur && ERRORS[erreur] && (

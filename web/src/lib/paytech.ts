@@ -19,7 +19,7 @@ type RequestPaymentResponse = {
 
 /**
  * Starts a PayTech checkout session for a booking and returns the URL to
- * redirect the passenger to (Wave, Orange Money, Free Money, cards, ...).
+ * redirect the passenger to (restricted to Wave and Orange Money).
  * Docs: https://docs.intech.sn/doc_paytech.php
  */
 export async function requestPaytechPayment(
@@ -52,6 +52,9 @@ export async function requestPaytechPayment(
       ipn_url: `${baseUrl}/api/paytech/ipn`,
       success_url: `${baseUrl}/paiement/succes?ref=${input.refCommand}`,
       cancel_url: `${baseUrl}/paiement/annule?ref=${input.refCommand}`,
+      // Restricts the PayTech checkout page to Wave and Orange Money only
+      // (no Free Money, cards, ...).
+      target_payment: "Wave, Orange Money",
       custom_field: input.customField ? JSON.stringify(input.customField) : undefined,
     }),
   });

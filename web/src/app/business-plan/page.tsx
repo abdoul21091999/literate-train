@@ -5,7 +5,7 @@ const SECTIONS = [
   },
   {
     title: "💡 La solution",
-    body: "SenTrajet connecte conducteurs disposant de places libres et passagers, avec recherche par ville/date, prix fixe affiché, réservation en ligne et paiement Mobile Money (Wave, Orange Money, Free Money) via PayTech.",
+    body: "SenTrajet connecte conducteurs disposant de places libres et passagers, avec recherche par ville/date, prix fixe affiché, réservation en ligne et paiement Mobile Money (Wave, Orange Money) via PayTech.",
   },
   {
     title: "💰 Modèle économique",

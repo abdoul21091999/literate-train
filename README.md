@@ -62,15 +62,14 @@ npm run start           # puis 'a' pour Android, 'i' pour iOS, 'w' pour le web
 L'app mobile lit et écrit directement dans Supabase (recherche, publication
 de trajet, profil), et appelle les routes `/api/bookings` et
 `/api/paytech/initiate` du site web pour réserver et payer. Le paiement
-PayTech s'ouvre dans un navigateur intégré (Wave, Orange Money, Free Money,
-carte).
+PayTech s'ouvre dans un navigateur intégré, limité à Wave et Orange Money.
 
 ## Fonctionnalités
 
 - 🔍 Recherche de trajets par ville de départ, destination et date
 - ➕ Publication d'un trajet (prix, places, véhicule, notes)
 - 👤 Comptes utilisateurs (email + mot de passe via Supabase Auth)
-- 💳 Paiement en ligne Mobile Money / carte via PayTech, avec webhook IPN
+- 💳 Paiement en ligne Wave / Orange Money via PayTech, avec webhook IPN
   vérifié par signature HMAC-SHA256
 - ⭐ Profils avec note, nombre de trajets et badge « vérifié »
 - 📱 Application mobile Expo (iOS + Android) partageant le même backend

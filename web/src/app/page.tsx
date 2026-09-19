@@ -24,8 +24,8 @@ export default async function HomePage() {
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-muted">
           SenTrajet met en relation conducteurs et passagers sur les 14
-          régions du pays. Réservez votre place et payez en Wave, Orange
-          Money ou Free Money.
+          régions du pays. Réservez votre place et payez en Wave ou Orange
+          Money.
         </p>
       </section>
 
