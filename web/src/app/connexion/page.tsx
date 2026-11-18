@@ -24,7 +24,11 @@ export default function ConnexionPage() {
     setLoading(false);
 
     if (error) {
-      setError("Email ou mot de passe incorrect.");
+      setError(
+        error.message.includes("Email not confirmed")
+          ? "Confirmez d'abord votre email (lien envoyé à l'inscription)."
+          : "Email ou mot de passe incorrect."
+      );
       return;
     }
 
@@ -66,9 +70,17 @@ export default function ConnexionPage() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-muted">
-            Mot de passe
-          </label>
+          <div className="mb-1 flex items-center justify-between">
+            <label className="block text-sm font-medium text-muted">
+              Mot de passe
+            </label>
+            <Link
+              href="/mot-de-passe-oublie"
+              className="text-xs font-semibold text-brand hover:underline"
+            >
+              Mot de passe oublié ?
+            </Link>
+          </div>
           <div className="relative">
             <Lock
               size={16}
